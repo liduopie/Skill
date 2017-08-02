@@ -22,6 +22,10 @@ namespace Skill.Data
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
         }
+<<<<<<< HEAD
         public DbSet<Project> Project { get; set; }
+=======
+        public DbSet<Person> PersonSet { get; set; }
+>>>>>>> origin/master
     }
 }

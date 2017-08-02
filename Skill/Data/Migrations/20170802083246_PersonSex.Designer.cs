@@ -8,9 +8,10 @@ using Skill.Data;
 namespace Skill.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170802083246_PersonSex")]
+    partial class PersonSex
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
@@ -173,28 +174,6 @@ namespace Skill.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-<<<<<<< HEAD
-            modelBuilder.Entity("Skill.Models.Project", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100);
-
-                    b.Property<string>("State")
-                        .IsRequired()
-                        .HasMaxLength(100);
-
-                    b.Property<string>("Synopsis")
-                        .IsRequired()
-                        .HasMaxLength(1024);
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Project");
-=======
             modelBuilder.Entity("Skill.Models.Person", b =>
                 {
                     b.Property<int>("Id")
@@ -220,7 +199,6 @@ namespace Skill.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("PersonSet");
->>>>>>> origin/master
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>
