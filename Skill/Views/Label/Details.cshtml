@@ -1,0 +1,42 @@
+@model Skill.Models.Label
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Label</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Synopsis)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Synopsis)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Applicable)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Applicable)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Category)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Category)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
