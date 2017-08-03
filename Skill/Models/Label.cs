@@ -31,5 +31,6 @@ namespace Skill.Models
         public string Category { get; set; }
 
         public ICollection<PersonUseLabel> PersonUseLable { get; set; }
+        public ICollection<PersonMasterLabel> PersonMasterLabel { get; set; }
     }
 }

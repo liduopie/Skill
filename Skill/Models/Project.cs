@@ -22,5 +22,15 @@ namespace Skill.Models
         [Required(ErrorMessage = "必填")]
         [StringLength(100)]
         public String State { get; set; }
+
+        /// <summary>
+        /// 项目参与人员表导航属性
+        /// </summary>
+        public ICollection<ProjectUseLabel> ProjectUseLabel { get; set; }
+
+        /// <summary>
+        /// 项目参与人员表导航属性
+        /// </summary>
+        public ICollection<ProjectPartakePerson> ProjectPartakePerson { get; set; }
     }
 }

@@ -43,6 +43,19 @@ namespace Skill.Models
         [Required(AllowEmptyStrings = false, ErrorMessage = "请输入住址")]
         public string Address { get; set; }
 
+        /// <summary>
+        /// 人员使用表导航属性
+        /// </summary>
         public ICollection<PersonUseLabel> PersonUserLable { get; set; }
+
+        /// <summary>
+        /// 人员掌握表导航属性
+        /// </summary>
+        public ICollection<PersonMasterLabel> PersonMasterLabel { get; set; }
+
+        /// <summary>
+        /// 项目参与人员表导航属性
+        /// </summary>
+        public ICollection<ProjectPartakePerson> ProjectPartakePerson { get; set; }
     }
 }
