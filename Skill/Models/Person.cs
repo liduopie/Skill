@@ -42,5 +42,7 @@ namespace Skill.Models
         [DataType(DataType.Text)]
         [Required(AllowEmptyStrings = false, ErrorMessage = "请输入住址")]
         public string Address { get; set; }
+
+        public ICollection<PersonUseLabel> PersonUserLable { get; set; }
     }
 }
