@@ -29,5 +29,7 @@ namespace Skill.Models
         [Display(Name = "标签类别")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "请输入标签类别")]
         public string Category { get; set; }
+
+        public ICollection<PersonUseLabel> PersonUseLable { get; set; }
     }
 }
