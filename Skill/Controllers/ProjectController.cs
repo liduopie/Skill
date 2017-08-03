@@ -10,22 +10,22 @@ using Skill.Models;
 
 namespace Skill.Controllers
 {
-    public class LabelController : Controller
+    public class ProjectController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public LabelController(ApplicationDbContext context)
+        public ProjectController(ApplicationDbContext context)
         {
             _context = context;    
         }
 
-        // GET: Label
+        // GET: Project
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Lable.ToListAsync());
+            return View(await _context.Project.ToListAsync());
         }
 
-        // GET: Label/Details/5
+        // GET: Project/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace Skill.Controllers
                 return NotFound();
             }
 
-            var label = await _context.Lable
-                .SingleOrDefaultAsync(m => m.Id == id);
-            if (label == null)
+            var project = await _context.Project
+                .SingleOrDefaultAsync(m => m.ID == id);
+            if (project == null)
             {
                 return NotFound();
             }
 
-            return View(label);
+            return View(project);
         }
 
-        // GET: Label/Create
+        // GET: Project/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Label/Create
+        // POST: Project/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Synopsis,Applicable,Category")] Label label)
+        public async Task<IActionResult> Create([Bind("ID,Name,Synopsis,State")] Project project)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(label);
+                _context.Add(project);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(label);
+            return View(project);
         }
 
-        // GET: Label/Edit/5
+        // GET: Project/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace Skill.Controllers
                 return NotFound();
             }
 
-            var label = await _context.Lable.SingleOrDefaultAsync(m => m.Id == id);
-            if (label == null)
+            var project = await _context.Project.SingleOrDefaultAsync(m => m.ID == id);
+            if (project == null)
             {
                 return NotFound();
             }
-            return View(label);
+            return View(project);
         }
 
-        // POST: Label/Edit/5
+        // POST: Project/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Synopsis,Applicable,Category")] Label label)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Synopsis,State")] Project project)
         {
-            if (id != label.Id)
+            if (id != project.ID)
             {
                 return NotFound();
             }
@@ -97,26 +97,26 @@ namespace Skill.Controllers
             {
                 try
                 {
-                    _context.Update(label);
+                    _context.Update(project);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!LabelExists(label.Id))
+                    if (!ProjectExists(project.ID))
                     {
                         return NotFound();
                     }
                     else
-                    {   
+                    {
                         throw;
                     }
                 }
                 return RedirectToAction("Index");
             }
-            return View(label);
+            return View(project);
         }
 
-        // GET: Label/Delete/5
+        // GET: Project/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace Skill.Controllers
                 return NotFound();
             }
 
-            var label = await _context.Lable
-                .SingleOrDefaultAsync(m => m.Id == id);
-            if (label == null)
+            var project = await _context.Project
+                .SingleOrDefaultAsync(m => m.ID == id);
+            if (project == null)
             {
                 return NotFound();
             }
 
-            return View(label);
+            return View(project);
         }
 
-        // POST: Label/Delete/5
+        // POST: Project/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var label = await _context.Lable.SingleOrDefaultAsync(m => m.Id == id);
-            _context.Lable.Remove(label);
+            var project = await _context.Project.SingleOrDefaultAsync(m => m.ID == id);
+            _context.Project.Remove(project);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
-        private bool LabelExists(int id)
+        private bool ProjectExists(int id)
         {
-            return _context.Lable.Any(e => e.Id == id);
+            return _context.Project.Any(e => e.ID == id);
         }
     }
 }
