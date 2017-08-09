@@ -23,15 +23,9 @@ namespace Skill.Controllers
         public async Task<IActionResult> Index(string  serathstring)
         {
             var applicationDbContext = _context.PersonUseLabel.Include(p => p.Lable).Include(p => p.Person);
-            var f = (from a in _context.PersonUseLabel
-                    join p in (from t in _context.Person select t)
-                    on a.PersonID equals p.Id
-                    join s in (from b in _context.Lable select b)
-                    on a.LabelID equals s.Id
-                    select new { BA = p.Name, BB = s.Name });
            
             
-            return View(await f.ToArrayAsync());
+            return View(await applicationDbContext.ToArrayAsync());
         }
 
         // GET: PersonUseLabel/Details/5

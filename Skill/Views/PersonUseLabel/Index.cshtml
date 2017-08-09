@@ -8,14 +8,6 @@
 
 <p>
     <a asp-action="Create">Create New</a>
-    @using (Html.BeginForm("Index", "PersonUseLabel", FormMethod.Get))
-    {
-    <p>
-        @*¿‡–Õ:@Html.DropDownList("genre", "All")*@
-        Title:@Html.TextBox("searchString")
-        <input type="submit" value="À—À˜" />
-    </p>
-    }
 </p>
 <table class="table">
     <thead>
