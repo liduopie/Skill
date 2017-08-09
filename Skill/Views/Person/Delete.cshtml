@@ -1,0 +1,60 @@
+﻿@model Skill.Models.Person
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>删除人员</h2>
+
+<h3>你确定要删除吗</h3>
+<div>
+    <h4>人员</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <input type="hidden" asp-for="Id" />
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Age)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Age)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Birthday)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Birthday)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Hobby)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Hobby)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Phone)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Phone)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <div class="form-actions no-color">
+            <a asp-action="Index">返回列表</a>
+            <input type="submit" value="确定删除" class="btn btn-default" style="margin-left:70px" />
+            
+        </div>
+    </form>
+</div>

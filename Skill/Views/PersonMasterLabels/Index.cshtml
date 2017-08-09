@@ -1,18 +1,18 @@
-﻿@model Skill.Data.PaginatedList<Skill.Models.Label>
+﻿@model Skill.Data.PaginatedList<Skill.Models.PersonMasterLabel>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h2>标签列表</h2>
+<h2>列表</h2>
 
 <p>
-    <a asp-action="Create">添加标签</a>
+    <a asp-action="Create">添加新项</a>
 </p>
-@using (Html.BeginForm("Index", "Label", FormMethod.Get))
+@using (Html.BeginForm("Index", "PersonMasterLabels", FormMethod.Get))
 {
     <p>
-        标签查询:@Html.TextBox("SearchString")
+        姓名查询:@Html.TextBox("SearchString")
         <input type="submit" value="查询" />
     </p>
 }
@@ -20,16 +20,10 @@
     <thead>
         <tr>
             <th>
-                标签名
+                人员
             </th>
             <th>
-                标签简介
-            </th>
-            <th>
-                标签使用情况
-            </th>
-            <th>
-                标签种类
+                标签
             </th>
             <th></th>
         </tr>
@@ -39,22 +33,19 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Name)
+                    @Html.DisplayFor(modelItem => item.Person.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Synopsis)
+                    @Html.DisplayFor(modelItem => item.Label.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Applicable)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Category)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">修改</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">详细信息</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">删除</a>
-                </td>
+                    @*<a asp-action="Edit" asp-route-id="@item.PersonID">修改</a> |
+    <a asp-action="Details" asp-route-id="@item.PersonID">详细信息</a> |*@
+                    <a asp-action="Delete" asp-route-id="@item.PersonID">删除</a>
+                    @*@Html.ActionLink("修改", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("详细信息", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("删除", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>*@
             </tr>
         }
     </tbody>

@@ -1,0 +1,36 @@
+﻿@model Skill.Models.PersonMasterLabel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>删除</h2>
+
+<h3>您确认删除这个标签吗？</h3>
+<div>
+    <h4>PersonMasterLabel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <input type="hidden" asp-for="PersonID" />
+        <input type="hidden" asp-for="LabelID" />
+        <dt>
+            @Html.DisplayNameFor(model => model.Label)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Label.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Person)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Person.Name)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <div class="form-actions no-color">
+            <input type="submit" value="确认删除" class="btn btn-default" /> |
+            <a asp-action="Index">返回列表</a>
+        </div>
+    </form>
+</div>

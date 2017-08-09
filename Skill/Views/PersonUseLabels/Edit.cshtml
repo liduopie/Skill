@@ -1,0 +1,46 @@
+﻿@model Skill.Models.PersonUseLabel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>修改</h2>
+
+<form asp-action="Edit">
+    <div class="form-horizontal">
+        <h4>人员使用标签</h4>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="ID" />
+        <div class="form-group">
+            <label asp-for="PersonID" class="control-label col-md-2">人员名称</label>
+            <div class="col-md-10">
+                <select asp-for="PersonID" class="form-control" asp-items="ViewBag.PersonID"></select>
+                <span asp-validation-for="PersonID" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="LabelID" class="control-label col-md-2">标签名称</label>
+            <div class="col-md-10">
+                <select asp-for="LabelID" class="form-control" asp-items="ViewBag.LabelID"></select>
+                <span asp-validation-for="LabelID" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="UserTime" class="col-md-2 control-label">使用时间</label>
+            <div class="col-md-10">
+                <input asp-for="UserTime" class="form-control" />
+                <span asp-validation-for="UserTime" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="确认修改" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">返回列表</a>
+</div>

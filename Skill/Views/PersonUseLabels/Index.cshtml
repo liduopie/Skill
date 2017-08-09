@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Skill.Models.PersonUseLabel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>列表</h2>
+
+<p>
+    <a asp-action="Create">添加新项</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                人员
+            </th>
+            <th>
+                标签
+            </th>
+            <th>
+                使用时间
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>   
+                <td>
+                    @Html.DisplayFor(modelItem => item.Person.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Lable.Name)
+                </td>
+               
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserTime)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ID">修改</a> |
+                    @*<a asp-action="Details" asp-route-id="@item.ID">详细信息</a> |*@
+                    <a asp-action="Delete" asp-route-id="@item.ID">删除</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

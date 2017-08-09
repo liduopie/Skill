@@ -1,0 +1,30 @@
+﻿@model Skill.Models.PersonMasterLabel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>详细信息</h2>
+
+<div>
+    <h4>人员掌握的标签</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Label)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Label.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Person)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Person.Name)
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">返回列表</a>
+</div>

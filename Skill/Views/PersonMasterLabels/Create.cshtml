@@ -1,0 +1,36 @@
+﻿@model Skill.Models.PersonMasterLabel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>添加</h2>
+
+<form asp-action="Create">
+    <div class="form-horizontal">
+        <h4>人员掌握的标签</h4>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="PersonID" class="col-md-2 control-label">人员姓名</label>
+            <div class="col-md-10">
+                <select asp-for="PersonID" class="form-control" asp-items="ViewBag.PersonID"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="LabelID" class="col-md-2 control-label">标签名称</label>
+            <div class="col-md-10">
+                <select asp-for="LabelID" class="form-control" asp-items="ViewBag.LabelID"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="确认添加" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">返回列表</a>
+</div>

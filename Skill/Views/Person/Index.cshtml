@@ -1,18 +1,18 @@
-﻿@model Skill.Data.PaginatedList<Skill.Models.Label>
-
+﻿@model Skill.Data.PaginatedList<Skill.Models.Person>
+@using System.Collections
 @{
     ViewData["Title"] = "Index";
 }
 
-<h2>标签列表</h2>
+<h2>人员列表</h2>
 
 <p>
-    <a asp-action="Create">添加标签</a>
+    <a asp-action="Create">添加人员</a>
 </p>
-@using (Html.BeginForm("Index", "Label", FormMethod.Get))
+@using (Html.BeginForm("Index", "Person", FormMethod.Get))
 {
     <p>
-        标签查询:@Html.TextBox("SearchString")
+        姓名查询:@Html.TextBox("SearchString")
         <input type="submit" value="查询" />
     </p>
 }
@@ -20,16 +20,28 @@
     <thead>
         <tr>
             <th>
-                标签名
+                姓名
             </th>
             <th>
-                标签简介
+                年龄
             </th>
             <th>
-                标签使用情况
+               生日
             </th>
             <th>
-                标签种类
+                爱好
+            </th>
+            <th>
+               手机号
+            </th>
+            <th>
+                住址
+            </th>
+            <th>
+                标签
+            </th>
+            <th>
+                项目
             </th>
             <th></th>
         </tr>
@@ -42,13 +54,25 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Synopsis)
+                    @Html.DisplayFor(modelItem => item.Age)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Applicable)
+                    @Html.DisplayFor(modelItem => item.Birthday)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Category)
+                    @Html.DisplayFor(modelItem => item.Hobby)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Phone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LabelCount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProjectCount)
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">修改</a> |

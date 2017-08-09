@@ -20,9 +20,35 @@ namespace Skill.Controllers
         }
 
         // GET: Label
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(
+    string sortOrder,
+    string currentFilter,
+    string searchString,
+    int? page)
         {
-            return View(await _context.Lable.ToListAsync());
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var label = from s in _context.Lable
+                         select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                label = label.Where(s => s.Name.Contains(searchString));
+            }
+            int pageSize = 8;
+            return View(await PaginatedList<Label>.CreateAsync(label.AsNoTracking(), page ?? 1, pageSize));
         }
 
         // GET: Label/Details/5

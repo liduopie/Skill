@@ -57,5 +57,8 @@ namespace Skill.Models
         /// 项目参与人员表导航属性
         /// </summary>
         public ICollection<ProjectPartakePerson> ProjectPartakePerson { get; set; }
+
+        public int LabelCount { get; set; }//标签掌握总数
+        public int ProjectCount { get; set; }//项目参与总数
     }
 }

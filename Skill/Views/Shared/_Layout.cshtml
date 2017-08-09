@@ -28,13 +28,17 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Skill</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">人力资源管理</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    <li><a asp-area="" asp-controller="Person" asp-action="Index">人员</a></li>
+                    <li><a asp-area="" asp-controller="Project" asp-action="Index">项目</a></li>
+                    <li><a asp-area="" asp-controller="Label" asp-action="Index">标签</a></li>
+                    <li><a asp-area="" asp-controller="PersonMasterLabels" asp-action="Index">人员掌握标签列表</a></li>
+                    <li><a asp-area="" asp-controller="PersonUseLabels" asp-action="Index">人员使用标签列表</a></li>
+                    <li><a asp-area="" asp-controller="ProjectPartakePersons" asp-action="Index">项目分派人员列表</a></li>
+                    <li><a asp-area="" asp-controller="ProjectUseLabels" asp-action="Index">项目使用标签</a></li>
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>
@@ -44,7 +48,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2017 - Skill</p>
+            <p>&copy; 人力资源管理</p>
         </footer>
     </div>
 

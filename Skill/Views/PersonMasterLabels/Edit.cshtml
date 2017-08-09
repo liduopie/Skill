@@ -1,0 +1,52 @@
+﻿@model Skill.Models.PersonMasterLabel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>修改</h2>
+
+<form asp-action="Edit">
+    <div class="form-horizontal">
+        <h4>人员掌握的标签</h4>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="PersonID" />
+        <input type="hidden" asp-for="LabelID" />
+        @*<div class="form-group">
+            <label asp-for="PersonID" class="col-md-2 control-label">人员名称</label>
+            <div class="col-md-10">
+                <input asp-for="PersonID" class="form-control" />
+                <span asp-validation-for="PersonID" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="LabelID" class="col-md-2 control-label">标签名称</label>
+            <div class="col-md-10">
+                <input asp-for="LabelID" class="form-control" />
+                <span asp-validation-for="LabelID" class="text-danger"></span>
+            </div>
+        </div>*@
+        <div class="form-group">
+            <label asp-for="PersonID" class="col-md-2 control-label">人员姓名</label>
+            <div class="col-md-10">
+                <select asp-for="PersonID" class="form-control" asp-items="ViewBag.PersonID"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="LabelID" class="col-md-2 control-label">标签名称</label>
+            <div class="col-md-10">
+                <select asp-for="LabelID" class="form-control" asp-items="ViewBag.LabelID"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="确认修改" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">返回列表</a>
+</div>

@@ -32,5 +32,8 @@ namespace Skill.Models
 
         public ICollection<PersonUseLabel> PersonUseLable { get; set; }
         public ICollection<PersonMasterLabel> PersonMasterLabel { get; set; }
+
+
+        public int LabelUseCount { get; set; }//标签使用总数
     }
 }
