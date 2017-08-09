@@ -37,7 +37,7 @@ namespace Skill.Controllers
             {
                 pn = pn.Where(p => p.Name.Contains(searchstring));
             }
-            int pageSize = 1;
+            int pageSize = 5;
      
             return View(await PaginatedList<Project>.CreateAsync(pn.AsNoTracking(), page ?? 1, pageSize));
 

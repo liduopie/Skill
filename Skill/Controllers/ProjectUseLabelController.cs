@@ -25,11 +25,13 @@ namespace Skill.Controllers
             if (id==null)
             {
                 var applicationDbContext = _context.ProjectUseLabel.Include(p => p.Label).Include(p => p.Project);
+                ViewData["id"] = id;
                 return View(await applicationDbContext.ToListAsync());
             }
             else
             {
                 var applicationDbContext = _context.ProjectUseLabel.Where(p => p.ProjectID == id).Include(p => p.Label).Include(p => p.Project);
+                ViewData["id"] = id;
                 return View(await applicationDbContext.ToListAsync());
             }
             
@@ -58,7 +60,7 @@ namespace Skill.Controllers
         // GET: ProjectUseLabel/Create
         public IActionResult Create()
         {
-            ViewData["LabelID"] = new SelectList(_context.Lable, "Id", "Applicable");
+            ViewData["LabelID"] = new SelectList(_context.Lable, "Id", "Name");
             ViewData["ProjectID"] = new SelectList(_context.Project, "ID", "Name");
             return View();
         }
@@ -76,7 +78,7 @@ namespace Skill.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewData["LabelID"] = new SelectList(_context.Lable, "Id", "Applicable", projectUseLabel.LabelID);
+            ViewData["LabelID"] = new SelectList(_context.Lable, "Id", "Name", projectUseLabel.LabelID);
             ViewData["ProjectID"] = new SelectList(_context.Project, "ID", "Name", projectUseLabel.ProjectID);
             return View(projectUseLabel);
         }
@@ -94,7 +96,7 @@ namespace Skill.Controllers
             {
                 return NotFound();
             }
-            ViewData["LabelID"] = new SelectList(_context.Lable, "Id", "Applicable", projectUseLabel.LabelID);
+            ViewData["LabelID"] = new SelectList(_context.Lable, "Id", "Name", projectUseLabel.LabelID);
             ViewData["ProjectID"] = new SelectList(_context.Project, "ID", "Name", projectUseLabel.ProjectID);
             return View(projectUseLabel);
         }
@@ -131,7 +133,7 @@ namespace Skill.Controllers
                 }
                 return RedirectToAction("Index");
             }
-            ViewData["LabelID"] = new SelectList(_context.Lable, "Id", "Applicable", projectUseLabel.LabelID);
+            ViewData["LabelID"] = new SelectList(_context.Lable, "Id", "Name", projectUseLabel.LabelID);
             ViewData["ProjectID"] = new SelectList(_context.Project, "ID", "Name", projectUseLabel.ProjectID);
             return View(projectUseLabel);
         }

@@ -27,12 +27,14 @@ namespace Skill.Controllers
             {
                 var applicationDbContext = _context.ProjectPartakePerson
                                        .Include(p => p.Person).Include(p => p.Project);
+                ViewData["id"] = id;
                 return View(await applicationDbContext.ToListAsync());
             }
             else
             {
                 var applicationDbContext = _context.ProjectPartakePerson.Where(p => p.ProjectID == id)
                                        .Include(p => p.Person).Include(p => p.Project);
+                ViewData["id"] = id;
                 return View(await applicationDbContext.ToListAsync());
             }
             
@@ -64,7 +66,7 @@ namespace Skill.Controllers
         // GET: ProjectPartakePerson/Create
         public IActionResult Create()
         {
-            ViewData["PersonID"] = new SelectList(_context.Person, "Id", "Address");
+            ViewData["PersonID"] = new SelectList(_context.Person, "Id", "Name");
             ViewData["ProjectID"] = new SelectList(_context.Project, "ID", "Name");
             return View();
         }
@@ -74,7 +76,7 @@ namespace Skill.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProjectID,PersonID")] ProjectPartakePerson projectPartakePerson)
+        public async Task<IActionResult> Create([Bind("ProjectID,PersonID,BeginTime,FinishTime")] ProjectPartakePerson projectPartakePerson)
         {
             if (ModelState.IsValid)
             {
@@ -82,7 +84,7 @@ namespace Skill.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewData["PersonID"] = new SelectList(_context.Person, "Id", "Address", projectPartakePerson.PersonID);
+            ViewData["PersonID"] = new SelectList(_context.Person, "Id", "Name", projectPartakePerson.PersonID);
             ViewData["ProjectID"] = new SelectList(_context.Project, "ID", "Name", projectPartakePerson.ProjectID);
             return View(projectPartakePerson);
         }
@@ -100,7 +102,7 @@ namespace Skill.Controllers
             {
                 return NotFound();
             }
-            ViewData["PersonID"] = new SelectList(_context.Person, "Id", "Address", projectPartakePerson.PersonID);
+            ViewData["PersonID"] = new SelectList(_context.Person, "Id", "Name", projectPartakePerson.PersonID);
             ViewData["ProjectID"] = new SelectList(_context.Project, "ID", "Name", projectPartakePerson.ProjectID);
             return View(projectPartakePerson);
         }
@@ -110,7 +112,7 @@ namespace Skill.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProjectID,PersonID")] ProjectPartakePerson projectPartakePerson)
+        public async Task<IActionResult> Edit(int id, [Bind("ProjectID,PersonID,BeginTime,FinishTime")] ProjectPartakePerson projectPartakePerson)
         {
             if (id != projectPartakePerson.ProjectID)
             {
@@ -137,7 +139,7 @@ namespace Skill.Controllers
                 }
                 return RedirectToAction("Index");
             }
-            ViewData["PersonID"] = new SelectList(_context.Person, "Id", "Address", projectPartakePerson.PersonID);
+            ViewData["PersonID"] = new SelectList(_context.Person, "Id", "Name", projectPartakePerson.PersonID);
             ViewData["ProjectID"] = new SelectList(_context.Project, "ID", "Name", projectPartakePerson.ProjectID);
             return View(projectPartakePerson);
         }

@@ -1,28 +1,62 @@
-@model Skill.Models.ProjectPartakePerson
+﻿@model Skill.Models.ProjectPartakePerson
 
 @{
     ViewData["Title"] = "Edit";
 }
 
-<h2>Edit</h2>
+<h2>修改</h2>
 
 <form asp-action="Edit">
     <div class="form-horizontal">
-        <h4>ProjectPartakePerson</h4>
+        <h4>项目分派人员表</h4>
         <hr />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <input type="hidden" asp-for="ProjectID" />
-    <input type="hidden" asp-for="PersonID" />
+        <input type="hidden" asp-for="ProjectID" />
+        <input type="hidden" asp-for="PersonID" />
+
+        <div class="form-group">
+            <label asp-for="ProjectID" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <select asp-for="ProjectID" class="form-control" asp-items="ViewBag.ProjectID"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="PersonID" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <select asp-for="PersonID" class="form-control" asp-items="ViewBag.PersonID"></select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="BeginTime" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="BeginTime" class="form-control" />
+                <span asp-validation-for="BeginTime" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="FinishTime" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="FinishTime" class="form-control" />
+                <span asp-validation-for="FinishTime" class="text-danger"></span>
+            </div>
+        </div>
+
+
+
+
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="保存" class="btn btn-default" />
             </div>
         </div>
     </div>
 </form>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">返回</a>
 </div>
 
 @section Scripts {

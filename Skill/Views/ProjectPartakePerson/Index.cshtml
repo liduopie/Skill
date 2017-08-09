@@ -1,13 +1,21 @@
-@model IEnumerable<Skill.Models.ProjectPartakePerson>
+﻿@model IEnumerable<Skill.Models.ProjectPartakePerson>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+<h2>项目分派人员表</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    @if (ViewData["id"] == null)
+{
+    <a asp-action="Create">添加</a>
+}
+else
+{
+    <a asp-area="" asp-controller="Project" asp-action="Details" asp-route-id="@ViewData["id"]">返回</a>
+}
+
 </p>
 <table class="table">
     <thead>
@@ -28,26 +36,34 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Project.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Person.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BeginTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FinishTime)
-            </td>
-            @*<td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>*@
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Project.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Person.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BeginTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FinishTime)
+                </td>
+                <td>
+                    @if (ViewData["id"] == null)
+                {
+
+                        @Html.ActionLink("修改 |", "Edit", new { id = item.PersonID, ids = item.ProjectID });
+
+                        @*@Html.ActionLink(" 详细情况 |", "Details", new { id = item.PersonID, ids = item.ProjectID });*@
+
+                        @Html.ActionLink(" 删除", "Delete", new { id = item.PersonID, ids = item.ProjectID })
+                    }
+
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

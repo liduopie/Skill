@@ -1,13 +1,13 @@
-@model Skill.Models.Project
+﻿@model Skill.Models.Project
 
 @{
     ViewData["Title"] = "Details";
 }
 
-<h2>Details</h2>
+<h2>详细情况</h2>
 
 <div>
-    <h4>Project</h4>
+    <h4>项目</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -44,7 +44,7 @@
             @Html.DisplayNameFor(model => model.Count)
         </dt>
         <dd>
-            <a asp-area="" asp-controller="ProjectPartakePerson" asp-action="Index"asp-route-id="@Model.ID">@Model.Count</a>
+            <a asp-area="" asp-controller="ProjectPartakePerson" asp-action="Index" asp-route-id="@Model.ID">@Model.Count</a>
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.CountL)
@@ -55,6 +55,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.ID">修改</a> |
+    <a asp-action="Index">返回</a>
 </div>

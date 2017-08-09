@@ -1,23 +1,23 @@
-@model Skill.Models.ProjectUseLabel
+﻿@model Skill.Models.ProjectUseLabel
 
 @{
     ViewData["Title"] = "Delete";
 }
 
-<h2>Delete</h2>
+<h2>删除</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+@*<h3>Are you sure you want to delete this?</h3>*@
 <div>
-    <h4>ProjectUseLabel</h4>
+    <h4>项目使用标签表</h4>
     <hr />
     <dl class="dl-horizontal">
-        <input type="hidden" asp-for="ProjectID" />
-        <input type="hidden" asp-for="LabelID" />
+        @*<input type="hidden" asp-for="ProjectID" />
+        <input type="hidden" asp-for="LabelID" />*@
         <dt>
             @Html.DisplayNameFor(model => model.Label)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Label.Applicable)
+            @Html.DisplayFor(model => model.Label.Name)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Project)
@@ -26,11 +26,11 @@
             @Html.DisplayFor(model => model.Project.Name)
         </dd>
     </dl>
-    
+
     <form asp-action="Delete">
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            <a asp-action="Index">Back to List</a>
+            <input type="submit" value="删除" class="btn btn-default" /> |
+            <a asp-action="Index">返回</a>
         </div>
     </form>
 </div>
