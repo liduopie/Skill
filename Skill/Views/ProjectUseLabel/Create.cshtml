@@ -1,40 +1,42 @@
-@model Skill.Models.ProjectUseLabel
+﻿@model Skill.Models.ProjectUseLabel
 
 @{
     ViewData["Title"] = "Create";
 }
 
-<h2>Create</h2>
+<h2>添加</h2>
 
 <form asp-action="Create">
     <div class="form-horizontal">
-        <h4>ProjectUseLabel</h4>
+        <h4>项目使用标签表</h4>
         <hr />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
             <label asp-for="ProjectID" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <select asp-for="ProjectID" class ="form-control" asp-items="ViewBag.ProjectID"></select>
+                <select asp-for="ProjectID" class="form-control" asp-items="ViewBag.ProjectID"></select>
             </div>
         </div>
         <div class="form-group">
             <label asp-for="LabelID" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <select asp-for="LabelID" class ="form-control" asp-items="ViewBag.LabelID"></select>
+                <select asp-for="LabelID" class="form-control" asp-items="ViewBag.LabelID"></select>
             </div>
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="添加" class="btn btn-default" />
             </div>
         </div>
     </div>
 </form>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">返回</a>
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+
