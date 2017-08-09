@@ -20,13 +20,37 @@
             @Html.DisplayNameFor(model => model.Synopsis)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Synopsis)
+            <p> @Html.DisplayFor(model => model.Synopsis)</p>
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.BeginTime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.BeginTime)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FinishTime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FinishTime)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.State)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.State)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Count)
+        </dt>
+        <dd>
+            <a asp-area="" asp-controller="ProjectPartakePerson" asp-action="Index"asp-route-id="@Model.ID">@Model.Count</a>
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CountL)
+        </dt>
+        <dd>
+            <a asp-area="" asp-controller="ProjectUseLabel" asp-action="Index" asp-route-id="@Model.ID">@Model.CountL</a>
         </dd>
     </dl>
 </div>

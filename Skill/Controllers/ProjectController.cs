@@ -20,9 +20,27 @@ namespace Skill.Controllers
         }
 
         // GET: Project
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page,string searchstring)
         {
-            return View(await _context.Project.ToListAsync());
+            var pn = from p in _context.Project
+                     select new Project
+                     {   ID = p.ID,
+                         Name = p.Name,
+                         Synopsis = p.Synopsis,
+                         State = p.State,
+                         BeginTime = p.BeginTime,
+                         FinishTime = p.FinishTime,
+                         Count = p.ProjectPartakePerson.Count(),
+                         CountL = p.ProjectUseLabel.Count()
+                     };
+            if (!String.IsNullOrEmpty(searchstring))
+            {
+                pn = pn.Where(p => p.Name.Contains(searchstring));
+            }
+            int pageSize = 1;
+     
+            return View(await PaginatedList<Project>.CreateAsync(pn.AsNoTracking(), page ?? 1, pageSize));
+
         }
 
         // GET: Project/Details/5
@@ -35,6 +53,21 @@ namespace Skill.Controllers
 
             var project = await _context.Project
                 .SingleOrDefaultAsync(m => m.ID == id);
+            var pn = from p in _context.Project
+                     where p.ID == id
+                     select new Project
+                     {
+                         Count = p.ProjectPartakePerson.Count(),
+                         CountL = p.ProjectUseLabel.Count()
+                     };
+            foreach (var item in pn)
+            {
+
+                project.Count = item.Count;
+                project.CountL = item.CountL;
+            }
+            
+            
             if (project == null)
             {
                 return NotFound();
@@ -54,7 +87,7 @@ namespace Skill.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,Synopsis,State")] Project project)
+        public async Task<IActionResult> Create([Bind("ID,Name,Synopsis,BeginTime,FinishTime,State")] Project project)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +119,7 @@ namespace Skill.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Synopsis,State")] Project project)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Synopsis,BeginTime,FinishTime,State")] Project project)
         {
             if (id != project.ID)
             {

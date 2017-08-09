@@ -32,6 +32,12 @@ namespace Skill.Data
         public DbSet<Person> Person { get; set; }
 
         public DbSet<PersonMasterLabel> PersonMasterLabel { get; set; }
+
+        public DbSet<ProjectPartakePerson> ProjectPartakePerson { get; set; }
+
+        public DbSet<Skill.Models.PersonUseLabel> PersonUseLabel { get; set; }
+
+        public DbSet<Skill.Models.ProjectUseLabel> ProjectUseLabel { get; set; }
         
     }
 }

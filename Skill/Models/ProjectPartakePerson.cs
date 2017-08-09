@@ -18,6 +18,12 @@ namespace Skill.Models
         /// </summary>
         [Key]
         public int PersonID { get; set; }
+        [Display(Name ="开始时间")]
+        [DataType(DataType.Date)]
+        public String BeginTime { get; set; }
+        [Display(Name ="结束时间")]
+        [DataType(DataType.Date)]
+        public String FinishTime { get; set; }
 
         /// <summary>
         /// 人员的引用属性

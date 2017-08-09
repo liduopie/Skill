@@ -1,0 +1,41 @@
+@model Skill.Models.PersonUseLabel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>PersonUseLabel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <input type="hidden" asp-for="ID" />
+        <dt>
+            @Html.DisplayNameFor(model => model.UserTime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UserTime)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Lable)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Lable.Applicable)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Person)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Person.Address)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            <a asp-action="Index">Back to List</a>
+        </div>
+    </form>
+</div>
