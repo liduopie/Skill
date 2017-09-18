@@ -7,7 +7,7 @@
 <h2>标签列表</h2>
 
 <p>
-    <a asp-action="Create">添加标签</a>
+    <a asp-action="#" data-toggle="modal" data-target="#myModal">添加标签</a>
 </p>
 @using (Html.BeginForm("Index", "Label", FormMethod.Get))
 {
@@ -77,3 +77,63 @@
    class="btn btn-default @nextDisabled btn">
     下一页
 </a>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="ModalLabel">添加新的人员</h4>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Create" style="text-align:center" id="labelFrom">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">标签名称</label>
+                            <div class="col-md-9">
+                                <input class="form-control" name="Name" />
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">标签简介</label>
+                            <div class="col-md-9">
+                                <input class="form-control" name="Synopsis" />
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">标签使用情况</label>
+                            <div class="col-md-9">
+                                <input class="form-control" name="Applicable" />
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">标签种类</label>
+                            <div class="col-md-9">
+                                <input class="form-control" name="Category" />
+
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="submit">保存信息</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#submit").click(function () {
+            $("#labelFrom").submit();
+        });
+
+    })
+</script>

@@ -1,36 +1,38 @@
-﻿model Skill.Models.PersonUseLabel
+@model Skill.Models.PersonUseLabel
 
 @{
     ViewData["Title"] = "Details";
 }
 
-<h2>详细信息</h2>
+<h2>人员使用标签</h2>
 
 <div>
-    <h4>人员使用标签</h4>
+    <h4>详细信息</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.UserTime)
+            @Html.DisplayNameFor(model => model.Person.Name)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.UserTime)
+            @Html.DisplayFor(model => model.Person.Name)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Lable)
+            @Html.DisplayNameFor(model => model.Label.Name)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Lable.Applicable)
+            @Html.DisplayFor(model => model.Label.Name)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Person)
+            @Html.DisplayNameFor(model => model.UseTime)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Person.Address)
+            @Html.DisplayFor(model => model.UseTime)
         </dd>
+     
     </dl>
 </div>
+<hr />
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.ID">修改</a> |
+    <a asp-action="Edit" asp-route-id="@Model.ID">编辑</a> |
     <a asp-action="Index">返回列表</a>
 </div>

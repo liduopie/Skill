@@ -1,12 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Skill.Data;
 using Skill.Models;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Skill.Controllers
 {
@@ -16,15 +14,30 @@ namespace Skill.Controllers
 
         public PersonUseLabelsController(ApplicationDbContext context)
         {
-            _context = context;    
+            _context = context;
         }
 
         // GET: PersonUseLabels
-        public async Task<IActionResult> Index()
+
+        public async Task<IActionResult> Index(int? pid, int? lid)
         {
-            var applicationDbContext = _context.PersonUseLabel.Include(p => p.Lable).Include(p => p.Person);
-            return View(await applicationDbContext.ToListAsync());
+
+            if (pid == null || lid == null)
+            {
+                var applicationDbContext = _context.PersonUseLabel.Include(p => p.Label).Include(p => p.Person);
+                return View(await applicationDbContext.ToListAsync());
+            }
+            else
+            {
+                var pul = from p in _context.PersonUseLabel.Include(p => p.Label).Include(p => p.Person)
+                          where p.PersonID == pid && p.LabelID == lid
+                          select p;
+
+                return View(pul);
+            }
+
         }
+
         // GET: PersonUseLabels/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -34,7 +47,7 @@ namespace Skill.Controllers
             }
 
             var personUseLabel = await _context.PersonUseLabel
-                .Include(p => p.Lable)
+                .Include(p => p.Label)
                 .Include(p => p.Person)
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (personUseLabel == null)
@@ -58,7 +71,8 @@ namespace Skill.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,PersonID,LabelID,UserTime")] PersonUseLabel personUseLabel)
+        public async Task<IActionResult> Create([Bind("ID,PersonID,LabelID,UseTime,0")] PersonUseLabel personUseLabel)
+
         {
             if (ModelState.IsValid)
             {
@@ -68,6 +82,7 @@ namespace Skill.Controllers
             }
             ViewData["LabelID"] = new SelectList(_context.Lable, "Id", "Name", personUseLabel.LabelID);
             ViewData["PersonID"] = new SelectList(_context.Person, "Id", "Name", personUseLabel.PersonID);
+
             return View(personUseLabel);
         }
 
@@ -94,7 +109,8 @@ namespace Skill.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,PersonID,LabelID,UserTime")] PersonUseLabel personUseLabel)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,PersonID,LabelID,UseTime,0")] PersonUseLabel personUseLabel)
+
         {
             if (id != personUseLabel.ID)
             {
@@ -121,8 +137,10 @@ namespace Skill.Controllers
                 }
                 return RedirectToAction("Index");
             }
+
             ViewData["LabelID"] = new SelectList(_context.Lable, "Id", "Name", personUseLabel.LabelID);
             ViewData["PersonID"] = new SelectList(_context.Person, "Id", "Name", personUseLabel.PersonID);
+
             return View(personUseLabel);
         }
 
@@ -135,7 +153,7 @@ namespace Skill.Controllers
             }
 
             var personUseLabel = await _context.PersonUseLabel
-                .Include(p => p.Lable)
+                .Include(p => p.Label)
                 .Include(p => p.Person)
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (personUseLabel == null)

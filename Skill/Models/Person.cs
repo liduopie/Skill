@@ -60,5 +60,6 @@ namespace Skill.Models
 
         public int LabelCount { get; set; }//标签掌握总数
         public int ProjectCount { get; set; }//项目参与总数
+        public int LabelUseCount { get; set; }//标签使用次数
     }
 }

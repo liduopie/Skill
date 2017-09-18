@@ -61,11 +61,31 @@ namespace Skill.Controllers
 
             var label = await _context.Lable
                 .SingleOrDefaultAsync(m => m.Id == id);
+            var person = from p in _context.Person//查询人员使用标签次数
+                         join b in _context.PersonUseLabel on p.Id equals b.PersonID
+                         join c in _context.Lable on b.LabelID equals c.Id
+                         where c.Id == id
+                         group b by new { wna = b.PersonID, sa = b.LabelID, sn = p.Name } into g
+                         select new
+                         {
+                             Id = g.Key.wna,
+                             Name = g.Key.sn,
+                             LabelUseCount = g.Count()
+                         };
+            List<Person> pp = new List<Person>();
+            foreach (var item in person)
+            {
+                Person p = new Person();
+                p.Id = item.Id;
+                p.Name = item.Name;
+                p.LabelUseCount = item.LabelUseCount;
+                pp.Add(p);
+            }
+            ViewData["PP"] = pp;
             if (label == null)
             {
                 return NotFound();
             }
-
             return View(label);
         }
 

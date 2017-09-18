@@ -7,23 +7,22 @@
 <h2>项目使用标签表</h2>
 
 <p>
-    @if (ViewData["id"] == null)
+
+    <a asp-action="Create">添加</a>
+       
+    @if (ViewData["id"] != null)
     {
-        <a asp-action="Create">添加</a>
-    }
-    else
-    {
-        <a asp-area="" asp-controller="Project" asp-action="Details" asp-route-id="@ViewData["id"]">返回</a>
+        <a asp-area="" asp-controller="Project" asp-action="Details" asp-route-id="@ViewData["id"]">返回上一级</a>
     }
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Label)
+                标签名称
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Project)
+                项目名称
             </th>
             <th></th>
         </tr>
@@ -39,12 +38,10 @@
                     @Html.DisplayFor(modelItem => item.Project.Name)
                 </td>
                 <td>
-                    @if (ViewData["id"] == null)
-                {
-                        @Html.ActionLink("修改 |", "Edit", new { id = item.LabelID, ids = item.ProjectID });
-                        //@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                   
+                        @Html.ActionLink("修改 |", "Edit", new { id = item.LabelID, ids = item.ProjectID })
+                        @*//@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
                         @Html.ActionLink(" 删除", "Delete", new { id = item.LabelID, ids = item.ProjectID })
-                    }
 
 
                 </td>

@@ -4,46 +4,49 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>列表</h2>
+<h2>人员使用标签</h2>
 
 <p>
-    <a asp-action="Create">添加新项</a>
+    <a asp-action="Create">添加信息</a>
+
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                人员
+            姓名
+
             </th>
             <th>
                 标签
             </th>
             <th>
-                使用时间
+               使用时间
             </th>
+            
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>   
+        @foreach (var item in Model) {
+            <tr>
+
                 <td>
                     @Html.DisplayFor(modelItem => item.Person.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Lable.Name)
+                    @Html.DisplayFor(modelItem => item.Label.Name)
                 </td>
-               
                 <td>
-                    @Html.DisplayFor(modelItem => item.UserTime)
+                    @Html.DisplayFor(modelItem => item.UseTime)
                 </td>
+                
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.ID">修改</a> |
-                    @*<a asp-action="Details" asp-route-id="@item.ID">详细信息</a> |*@
+                    <a asp-action="Details" asp-route-id="@item.ID">详细信息</a> |
                     <a asp-action="Delete" asp-route-id="@item.ID">删除</a>
                 </td>
             </tr>
-        }
+}
     </tbody>
 </table>

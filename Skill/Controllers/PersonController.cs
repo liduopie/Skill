@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Skill.Data;
 using Skill.Models;
-using System.Collections;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
 
 namespace Skill.Controllers
 {
@@ -16,16 +16,15 @@ namespace Skill.Controllers
 
         public PersonController(ApplicationDbContext context)
         {
-            _context = context;    
+            _context = context;
         }
 
         // GET: Person
         public async Task<IActionResult> Index(
-    string sortOrder,
-    string currentFilter,
-    string searchString,
-    int? page)
+            string sortOrder, string currentFilter, string searchString, int? page)
         {
+
+
             ViewData["CurrentSort"] = sortOrder;
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
@@ -40,24 +39,29 @@ namespace Skill.Controllers
             }
 
             ViewData["CurrentFilter"] = searchString;
-            var ps = from p in _context.Person//查询全部的人的对象
-                     select new Person
-                     {
-                         Id=p.Id,
-                         Name=p.Name,
-                         Age=p.Age,
-                         Birthday=p.Birthday,
-                         Hobby=p.Hobby,
-                         Address=p.Address,
-                         LabelCount = p.PersonMasterLabel.Count(),
-                         ProjectCount=p.ProjectPartakePerson.Count()
-                     };
+
+            //查询全部的人的对象
+            var personAll = from p in _context.Person
+                            select new Person
+                            {
+                                Id = p.Id,
+                                Name = p.Name,
+                                Age = p.Age,
+                                Birthday = p.Birthday,
+                                Hobby = p.Hobby,
+                                Address = p.Address,
+                                LabelCount = p.PersonMasterLabel.Count(),
+                                ProjectCount = p.ProjectPartakePerson.Count()
+                            };
+
             if (!String.IsNullOrEmpty(searchString))
             {
-                ps = ps.Where(s => s.Name.Contains(searchString));
+                personAll = personAll.Where(s => s.Name.Contains(searchString));
             }
-              int pageSize = 8;
-            return View(await PaginatedList<Person>.CreateAsync(ps.AsNoTracking(), page ?? 1, pageSize));
+
+            int pageSize = 8;
+
+            return View(await PaginatedList<Person>.CreateAsync(personAll.AsNoTracking(), page ?? 1, pageSize));
         }
 
         // GET: Person/Details/5
@@ -67,42 +71,56 @@ namespace Skill.Controllers
             {
                 return NotFound();
             }
-            var person = await _context.Person//查询一个人的对象
-    .SingleOrDefaultAsync(m => m.Id == id);
-            var ps = from p in _context.Person//查询这个人的掌握和参与项目的数量
-                     where p.Id==id
-                     select new
-                     {
-                         Master = p.PersonMasterLabel.Count(),
-                         Partake =p.ProjectPartakePerson.Count()
-                     };
-            foreach(var item in ps)//使用循环将结果放到人的对象中
+
+            // 查询一个人的对象
+            var person = await _context.Person
+                .SingleOrDefaultAsync(m => m.Id == id);
+
+            var labelAll = (from l in _context.Lable select l).ToList();
+            ViewData["labelAll"] = labelAll;
+
+            //查询这个人的掌握标签和参与项目的数量
+            var masterLabelPartakeProject = from p in _context.Person
+                                            where p.Id == id
+                                            select new
+                                            {
+                                                Master = p.PersonMasterLabel.Count(),
+                                                Partake = p.ProjectPartakePerson.Count()
+                                            };
+
+            //使用循环将结果放到人的对象中
+            foreach (var item in masterLabelPartakeProject)
             {
                 person.LabelCount = item.Master;
                 person.ProjectCount = item.Partake;
             }
-            var label = from p in _context.Person//查询标签的使用以及次数
-                    join b in _context.PersonUseLabel on p.Id equals b.PersonID
-                    join c in _context.Lable on b.LabelID equals c.Id
-                    where p.Id == 1
-                    group b by new { wna = b.PersonID, sa = b.LabelID, sn = c.Name } into g
-                    select new 
-                    {
-                        Id = g.Key.sa,
-                        Name = g.Key.sn,
-                        LabelUseCount = g.Count()
-                    };
-            List<Label> ll = new List<Label>();
+
+            //查询标签的使用以及次数
+            var label = from pm in _context.PersonMasterLabel
+                        join pu in _context.PersonUseLabel on pm.PersonID equals pu.PersonID
+                        join c in _context.Lable on pm.LabelID equals c.Id
+                        group pu by new { wna = pu.PersonID, sa = pm.LabelID, cname = c.Name } into g
+                        select new
+                        {
+                            cname = g.Key.cname,
+                            PersonID = g.Key.wna,
+                            LabelID = g.Key.sa
+                        };
+
+            List<Label> labelList = new List<Label>();
+
             foreach (var item in label)
             {
                 Label l = new Label();
-                l.Id = item.Id;
-                l.Name = item.Name;
-                l.LabelUseCount = item.LabelUseCount;
-                ll.Add(l);
+                l.Id = item.LabelID;
+                l.Name = item.cname;
+                labelList.Add(l);
             }
-            ViewData["LL"] = ll;
-            var project = from p in _context.Person//查询这个人掌握的项目
+
+            ViewData["LabelList"] = labelList;
+
+            //查询这个人完成的项目
+            var project = from p in _context.Person
                           join b in _context.ProjectPartakePerson on p.Id equals b.PersonID
                           join c in _context.Project on b.ProjectID equals c.ID
                           where p.Id == id
@@ -110,18 +128,80 @@ namespace Skill.Controllers
                           {
                               c.Name
                           };
-            List<String> pr = new List<String>();//新建集合存储数据
-            foreach (var item in project)//将项目名放入集合中
+
+            //新建集合存储数据
+            List<String> pr = new List<String>();
+
+            //将项目名放入集合中
+            foreach (var item in project)
             {
                 pr.Add(item.Name);
             }
-            ViewData["ProjectName"] = pr;//传递给视图
+
+            //传递给视图
+            ViewData["ProjectName"] = pr;
+
             if (person == null)
             {
                 return NotFound();
             }
+
             return View(person);
         }
+        
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public async Task<IActionResult> Details([FromBody]PersonMasterLabel personMasterLabel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _context.PersonMasterLabel.Add(personMasterLabel);
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (PersonMasterLabelExists(personMasterLabel.PersonID))
+                {
+                    return new StatusCodeResult(StatusCodes.Status409Conflict);
+                }
+                else
+                {
+                    return BadRequest(ModelState);
+                }
+            }
+
+            //查询标签的使用以及次数
+            var label = from pm in _context.PersonMasterLabel
+                        join pu in _context.PersonUseLabel on pm.PersonID equals pu.PersonID
+                        join c in _context.Lable on pm.LabelID equals c.Id
+                        group pu by new { wna = pu.PersonID, sa = pm.LabelID, cname = c.Name } into g
+                        select new
+                        {
+                            cname = g.Key.cname,
+                            PersonID = g.Key.wna,
+                            LabelID = g.Key.sa
+                        };
+
+            List<Label> labelList = new List<Label>();
+
+            foreach (var item in label)
+            {
+                Label l = new Label();
+                l.Id = item.LabelID;
+                l.Name = item.cname;
+                labelList.Add(l);
+            }
+            
+            ViewData["LabelList"] = labelList;
+            ViewData["Personid"] = personMasterLabel.PersonID;
+            return PartialView("_PartialPage", ViewData["Personid"]);
+        }
+
         // GET: Person/Create
         public IActionResult Create()
         {
@@ -149,14 +229,15 @@ namespace Skill.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                ViewData["edit"] = null;
             }
 
             var person = await _context.Person.SingleOrDefaultAsync(m => m.Id == id);
             if (person == null)
             {
-                return NotFound();
+                ViewData["edit"] = null;
             }
+            ViewData["edit"] = person;
             return View(person);
         }
 
@@ -227,6 +308,11 @@ namespace Skill.Controllers
         private bool PersonExists(int id)
         {
             return _context.Person.Any(e => e.Id == id);
+        }
+
+        private bool PersonMasterLabelExists(int id)
+        {
+            return _context.PersonMasterLabel.Any(e => e.PersonID == id);
         }
     }
 }

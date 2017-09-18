@@ -30,7 +30,7 @@
     <form asp-action="Delete">
         <div class="form-actions no-color">
             <input type="submit" value="删除" class="btn btn-default" /> |
-            <a asp-action="Index">返回</a>
+            <a asp-area="" asp-controller="ProjectUseLabel" asp-action="Index" asp-route-id="@ViewData["id"]">返回</a>
         </div>
     </form>
 </div>

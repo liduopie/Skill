@@ -38,6 +38,6 @@ namespace Skill.Data
         public DbSet<Skill.Models.PersonUseLabel> PersonUseLabel { get; set; }
 
         public DbSet<Skill.Models.ProjectUseLabel> ProjectUseLabel { get; set; }
-        
+
     }
 }

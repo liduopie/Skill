@@ -12,27 +12,32 @@
         <hr />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
-            <label asp-for="PersonID" class="col-md-2 control-label">人员名称</label>
+            <label asp-for="PersonID" class="col-md-2 control-label">姓名</label>
             <div class="col-md-10">
                 <select asp-for="PersonID" class="form-control" asp-items="ViewBag.PersonID"></select>
             </div>
         </div>
         <div class="form-group">
+
             <label asp-for="LabelID" class="col-md-2 control-label">标签名称</label>
             <div class="col-md-10">
                 <select asp-for="LabelID" class="form-control" asp-items="ViewBag.LabelID"></select>
             </div>
         </div>
         <div class="form-group">
-            <label asp-for="UserTime" class="col-md-2 control-label">使用时间</label>
+
+            <label asp-for="UseTime" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="UserTime" class="form-control" />
-                <span asp-validation-for="UserTime" class="text-danger"></span>
+                <input asp-for="UseTime" class="form-control" />
+                <span asp-validation-for="UseTime" class="text-danger"></span>
             </div>
         </div>
+       
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
+
                 <input type="submit" value="确认添加" class="btn btn-default" />
+
             </div>
         </div>
     </div>

@@ -7,14 +7,12 @@
 <h2>项目分派人员表</h2>
 
 <p>
-    @if (ViewData["id"] == null)
-{
+   
+    
     <a asp-action="Create">添加</a>
-}
-else
-{
-    <a asp-area="" asp-controller="Project" asp-action="Details" asp-route-id="@ViewData["id"]">返回</a>
-}
+    
+    <a asp-area="" asp-controller="Project" asp-action="Details" asp-route-id="@ViewData["id"]">返回上一级</a>
+
 
 </p>
 <table class="table">
@@ -40,10 +38,10 @@ else
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Project.Name)
+                    @Html.DisplayFor(modelItem => item.Person.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Person.Name)
+                    @Html.DisplayFor(modelItem => item.Project.Name)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.BeginTime)
@@ -52,15 +50,12 @@ else
                     @Html.DisplayFor(modelItem => item.FinishTime)
                 </td>
                 <td>
-                    @if (ViewData["id"] == null)
-                {
-
-                        @Html.ActionLink("修改 |", "Edit", new { id = item.PersonID, ids = item.ProjectID });
+                       
+                        @Html.ActionLink("修改 |", "Edit", new {  ids = item.ProjectID, id = item.PersonID })
 
                         @*@Html.ActionLink(" 详细情况 |", "Details", new { id = item.PersonID, ids = item.ProjectID });*@
 
                         @Html.ActionLink(" 删除", "Delete", new { id = item.PersonID, ids = item.ProjectID })
-                    }
 
                 </td>
             </tr>

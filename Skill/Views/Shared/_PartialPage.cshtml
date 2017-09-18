@@ -1,0 +1,25 @@
+@{
+    List<Label> a = (List<Label>)ViewData["LabelList"];
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                掌握的标签
+            </th>
+            <th>
+                使用次数
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in a)
+            {
+            <tr>
+                <td>@item.Name</td>
+                @*<td>@item.LabelUseCount</td>*@
+                <td>@Html.ActionLink("使用情况详细", "Index", "PersonUseLabels", new {pid=(int)ViewData["Personid"], lid = item.Id })</td>
+            </tr>
+        }
+    </tbody>
+</table>

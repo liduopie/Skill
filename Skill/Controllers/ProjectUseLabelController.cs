@@ -58,8 +58,9 @@ namespace Skill.Controllers
         }
 
         // GET: ProjectUseLabel/Create
-        public IActionResult Create()
+        public IActionResult Create( )
         {
+            
             ViewData["LabelID"] = new SelectList(_context.Lable, "Id", "Name");
             ViewData["ProjectID"] = new SelectList(_context.Project, "ID", "Name");
             return View();
@@ -76,7 +77,7 @@ namespace Skill.Controllers
             {
                 _context.Add(projectUseLabel);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index","Project");
             }
             ViewData["LabelID"] = new SelectList(_context.Lable, "Id", "Name", projectUseLabel.LabelID);
             ViewData["ProjectID"] = new SelectList(_context.Project, "ID", "Name", projectUseLabel.ProjectID);
@@ -90,7 +91,7 @@ namespace Skill.Controllers
             {
                 return NotFound();
             }
-
+            ViewData["id"] = id;
             var projectUseLabel = await _context.ProjectUseLabel.SingleOrDefaultAsync(m => m.ProjectID == id);
             if (projectUseLabel == null)
             {
@@ -112,7 +113,7 @@ namespace Skill.Controllers
             {
                 return NotFound();
             }
-
+            
             if (ModelState.IsValid)
             {
                 try
@@ -131,7 +132,7 @@ namespace Skill.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction("Index");
+                return RedirectToAction("Index/"+id);
             }
             ViewData["LabelID"] = new SelectList(_context.Lable, "Id", "Name", projectUseLabel.LabelID);
             ViewData["ProjectID"] = new SelectList(_context.Project, "ID", "Name", projectUseLabel.ProjectID);
@@ -145,7 +146,7 @@ namespace Skill.Controllers
             {
                 return NotFound();
             }
-
+            ViewData["id"] = id;
             var projectUseLabel = await _context.ProjectUseLabel
                 .Include(p => p.Label)
                 .Include(p => p.Project)
@@ -166,7 +167,7 @@ namespace Skill.Controllers
             var projectUseLabel = await _context.ProjectUseLabel.SingleOrDefaultAsync(m => m.ProjectID == id);
             _context.ProjectUseLabel.Remove(projectUseLabel);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index/" + id);
         }
 
         private bool ProjectUseLabelExists(int id)

@@ -17,12 +17,14 @@
                 <select asp-for="ProjectID" class="form-control" asp-items="ViewBag.ProjectID"></select>
             </div>
         </div>
+
         <div class="form-group">
             <label asp-for="PersonID" class="col-md-2 control-label"></label>
             <div class="col-md-10">
                 <select asp-for="PersonID" class="form-control" asp-items="ViewBag.PersonID"></select>
             </div>
         </div>
+
 
         <div class="form-group">
             <label asp-for="BeginTime" class="col-md-2 control-label"></label>
@@ -50,7 +52,7 @@
 </form>
 
 <div>
-    <a asp-action="Index">返回</a>
+    <a asp-area="" asp-controller="Project" asp-action="Index" >返回</a>
 </div>
 
 @section Scripts {

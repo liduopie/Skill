@@ -56,89 +56,93 @@
             </tr>
         </tbody>
     </table>
-    @*<dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Age)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Age)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Birthday)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Birthday)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Hobby)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Hobby)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Phone)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Phone)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Address)
-        </dd>
-    </dl>*@
 </div>
 <hr />
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+    添加掌握标签
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">标签</h4>
+            </div>
+            <label class="control-label">姓名</label>
+            <div class="panel-group">
+                <select class="form-control" id="personid">
+                    <option value="@Model.Id">@Model.Name</option>
+                </select>
+            </div>
+            <label class="control-label">标签</label>
+            <div class="panel-group">
+                <select class="form-control" id="LabelId">
+                    @foreach (var item in (List<Label>)ViewData["labelAll"])
+                    {
+                        <option value="@item.Id">@item.Name</option>
+                    }
+                </select>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close">关闭</button>
+            <button type="button" class="btn btn-primary" id="create">确认添加</button>
+        </div>
+    </div>
+</div>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script type="text/javascript">
+
+    $("#create").click(function () {
+        var aaa = Number($("#personid").val());
+        var bbb = Number($("#LabelId").val());
+        PersonMasterLabel = { LabelID: bbb, PersonID: aaa };
+        setTimeout(function () {
+            $.ajax({
+                type: "POST",
+                url: "/Person/Details",
+                contentType: "application/json",
+                data: JSON.stringify(PersonMasterLabel),
+                datatype: "html",
+                success: function (data) {
+                    //alert("成功");
+                    $('#myModal').modal('hide');
+                    $("#ajax").html(data);//成功的时候返回的Html页面
+                },
+                error: function () {
+                    alert("添加失败");
+                }
+            });
+        },2000)
+    });
+
+</script>
 @{ 
-    List<Label> a = (List<Label>)ViewData["LL"];
+    List<Master> a = (List<Master>)ViewData["MasterList"];
+    ViewData["Personid"] = Model.Id;
+}
+<div id="ajax">
+    @await Html.PartialAsync("_PartialPage")
+</div>
+@{
+    List<String> proje = (List<String>)ViewData["ProjectName"];
 }
 <div>
-    掌握标签总数：@Html.DisplayFor(model => model.LabelCount)
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    掌握的标签
-                </th>
-                <th>
-                    使用次数
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-             @foreach (var item in a)
-             {
-                <tr>
-                    <td>@item.Name</td>
-                    <td>@item.LabelUseCount</td>
-                    <td>@Html.ActionLink("使用情况详细", "Index", "PersonUseLabel", new { PersonId=Model.Id,LabelId=item.Id})</td>
-                </tr> 
-             }
-        </tbody>
-    </table>
-    </div>
-@{
-            List<String> proje =(List<String>)ViewData["ProjectName"];
-}
-    <div>
     参与项目的数量：@Html.DisplayFor(model => model.ProjectCount)
     <table class="table">
         @foreach (var item in proje)
         {
             <tr>
                 <td>@item</td>
-                <td>@Html.ActionLink("项目详细信息", "Index", "Project", new { PersonId=Model.Id, searchString=item})</td>
+                <td>@Html.ActionLink("项目详细信息", "Index", "Project", new { PersonId = Model.Id, searchString = item })</td>
             </tr>
-         }
+        }
     </table>
-    </div>
+</div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">修改</a> |
     <a asp-action="Index">返回列表</a>

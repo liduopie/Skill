@@ -66,6 +66,7 @@ namespace Skill.Controllers
         // GET: ProjectPartakePerson/Create
         public IActionResult Create()
         {
+           
             ViewData["PersonID"] = new SelectList(_context.Person, "Id", "Name");
             ViewData["ProjectID"] = new SelectList(_context.Project, "ID", "Name");
             return View();
@@ -82,7 +83,7 @@ namespace Skill.Controllers
             {
                 _context.Add(projectPartakePerson);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index","Project");
             }
             ViewData["PersonID"] = new SelectList(_context.Person, "Id", "Name", projectPartakePerson.PersonID);
             ViewData["ProjectID"] = new SelectList(_context.Project, "ID", "Name", projectPartakePerson.ProjectID);
@@ -90,20 +91,23 @@ namespace Skill.Controllers
         }
 
         // GET: ProjectPartakePerson/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? id,int ids)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var projectPartakePerson = await _context.ProjectPartakePerson.SingleOrDefaultAsync(m => m.ProjectID == id);
+            
+
+            var projectPartakePerson = await _context.ProjectPartakePerson.SingleOrDefaultAsync(m => m.ProjectID == id && m.PersonID==ids);
             if (projectPartakePerson == null)
             {
                 return NotFound();
             }
             ViewData["PersonID"] = new SelectList(_context.Person, "Id", "Name", projectPartakePerson.PersonID);
             ViewData["ProjectID"] = new SelectList(_context.Project, "ID", "Name", projectPartakePerson.ProjectID);
+            ViewData["id"] = id;
             return View(projectPartakePerson);
         }
 
@@ -137,7 +141,7 @@ namespace Skill.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction("Index");
+                return RedirectToAction("Index/"+id);
             }
             ViewData["PersonID"] = new SelectList(_context.Person, "Id", "Name", projectPartakePerson.PersonID);
             ViewData["ProjectID"] = new SelectList(_context.Project, "ID", "Name", projectPartakePerson.ProjectID);
@@ -145,34 +149,35 @@ namespace Skill.Controllers
         }
 
         // GET: ProjectPartakePerson/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? id,int ids)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
+     
             var projectPartakePerson = await _context.ProjectPartakePerson
                 .Include(p => p.Person)
                 .Include(p => p.Project)
-                .SingleOrDefaultAsync(m => m.ProjectID == id);
+                .SingleOrDefaultAsync(m => m.ProjectID == id && m.PersonID==ids);
             if (projectPartakePerson == null)
             {
                 return NotFound();
             }
-
+            ViewData["id"] = id;
             return View(projectPartakePerson);
         }
 
         // POST: ProjectPartakePerson/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id,int ids)
         {
-            var projectPartakePerson = await _context.ProjectPartakePerson.SingleOrDefaultAsync(m => m.ProjectID == id);
+            var projectPartakePerson = await _context.ProjectPartakePerson.SingleOrDefaultAsync(m => m.ProjectID == id && m.PersonID==ids);
             _context.ProjectPartakePerson.Remove(projectPartakePerson);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index/" + id);
         }
 
         private bool ProjectPartakePersonExists(int id)

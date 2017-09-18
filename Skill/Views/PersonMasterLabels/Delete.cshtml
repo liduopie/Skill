@@ -8,19 +8,19 @@
 
 <h3>您确认删除这个标签吗？</h3>
 <div>
-    <h4>PersonMasterLabel</h4>
+    <h4>人员掌握标签</h4>
     <hr />
     <dl class="dl-horizontal">
         <input type="hidden" asp-for="PersonID" />
         <input type="hidden" asp-for="LabelID" />
         <dt>
-            @Html.DisplayNameFor(model => model.Label)
+            标签名
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Label.Name)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Person)
+            人员名
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Person.Name)

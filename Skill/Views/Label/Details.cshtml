@@ -9,32 +9,77 @@
 <div>
     <h4>标签</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Synopsis)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Synopsis)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Applicable)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Applicable)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Category)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Category)
-        </dd>
-    </dl>
+    <table class="table-condensed">
+        <thead>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.Name)</td>
+                <td>@Html.DisplayNameFor(model => model.Synopsis)</td>
+                <td>@Html.DisplayNameFor(model => model.Applicable)</td>
+                <td>@Html.DisplayNameFor(model => model.Category)</td>
+            </tr>
+            </thead>
+        <tbody>
+            <tr>
+                <td>@Html.DisplayFor(model => model.Name)</td>
+                <td>@Html.DisplayFor(model => model.Synopsis)</td>
+                <td>@Html.DisplayFor(model => model.Applicable)</td>
+                <td>@Html.DisplayFor(model => model.Category)</td>
+            </tr>
+        </tbody>
+    </table>
+        @*<dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Synopsis)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Synopsis)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Applicable)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Applicable)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Category)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Category)
+                </dd>
+            </dl>*@
+</div>
+@{
+    List<Person> a = (List<Person>)ViewData["PP"];
+}
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    人员
+                </th>
+                <th>
+                    使用次数
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in a)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.LabelUseCount</td>
+                    <td>@Html.ActionLink("使用情况详细", "Index", "PersonUseLabels", new { pid = item.Id, lid = Model.Id })</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">修改</a> |
